@@ -1,22 +1,28 @@
 // 相关环境变量(都是可选的)
-// SUB_PATH | subpath  订阅路径
-// PROXYIP  | proxyip  代理IP
-// UUID     | uuid     UUID
-// DISABLE_TROJAN | 是否关闭Trojan, 设置为true时关闭，false开启，默认开启 
+// SUB_PATH | subPath  订阅路径
+// PROXYIP  | proxyIP  代理IP
+// UUID     | yourUUID UUID
+// DISABLE_TROJAN | disabletro 是否关闭Trojan, 设置为true时关闭，false开启，默认开启 
 
 import { connect } from 'cloudflare:sockets';
 
-let subPath = 'link';     // 节点订阅路径,不修改将使用uuid作为订阅路径
-let password = '123456';  // 主页密码,建议修改或添加 PASSWORD环境变量
-let proxyIP = 'proxy.xxxxxxxx.tk:50001';  // proxyIP 格式：ip、域名、ip:port、域名:port等,没填写port，默认使用443
-let yourUUID = '5dc15e15-f285-4a9d-959b-0e4fbdd77b63'; // UUID,建议修改或添加环境便量
-let disabletro = false;  // 是否关闭trojan, 设置为true时关闭，false开启 
+let subPath = 'tl6ib63c5n8a5m19';   // 节点订阅路径,不修改将使用uuid作为订阅路径
+let password = '5O5muC1Ny15xUSse';  // 主页密码,建议修改或添加 PASSWORD环境变量
+let proxyIP = '';  // proxyIP 格式：ip、域名、ip:port、域名:port等,没填写port，默认使用443
+let yourUUID = '652a6010-b89b-42ec-be38-fcce4feb4cda'; // UUID,建议修改或添加环境便量
+let disabletro = true;  // 是否关闭trojan, 设置为true时关闭，false开启 
 
 // CDN 
 let cfip = [ // 格式:优选域名:端口#备注名称、优选IP:端口#备注名称、[ipv6优选]:端口#备注名称、优选域名#备注 
-    'mfa.gov.ua#SG', 'saas.sin.fan#HK', 'store.ubi.com#JP','cf.130519.xyz#KR','cf.008500.xyz#HK', 
-    'cf.090227.xyz#SG', 'cf.877774.xyz#HK','cdns.doon.eu.org#JP','sub.danfeng.eu.org#TW','cf.zhetengsha.eu.org#HK'
-];  // 在此感谢各位大佬维护的优选域名
+    'mfa.gov.ua', 
+	'store.ubi.com', 
+	'staticdelivery.nexusmods.com', 
+	'www.speedtest.net', 
+	'steamdb.info', 
+	'www.nexusmods.com', 
+	'www.udacity.com', 
+	'www.visa.com.sg'
+];
 const WS_READY_STATE_OPEN = 1;
 const WS_READY_STATE_CLOSING = 2;
 function closeSocketQuietly(socket) { 
@@ -987,7 +993,6 @@ function getLoginPage(url, baseUrl, showError = false) {
         </form>
         
         <div class="footer">
-            <p>Powered by eooce <a href="https://t.me/eooceu" target="_blank" style="color: #007bff; text-decoration: none;">Join Telegram group</a></p>
         </div>
     </div>
     
@@ -1389,37 +1394,22 @@ function getMainPageContent(url, baseUrl) {
                 <span class="label">V2rayN订阅地址</span>
                 <span class="value">${baseUrl}/${subPath}</span>
             </div>
-            <div class="info-item">
-                <span class="label">Clash订阅地址</span>
-                <span class="value">https://sublink.eooce.com/clash?config=${baseUrl}/${subPath}</span>
-            </div>
-            <div class="info-item">
-                <span class="label">singbox订阅地址</span>
-                <span class="value">https://sublink.eooce.com/singbox?config=${baseUrl}/${subPath}</span>
-            </div>
         </div>
         
         <div class="button-group">
-            <button onclick="copySingboxSubscription()" class="btn btn-secondary">复制singbox订阅链接</button>
-            <button onclick="copyClashSubscription()" class="btn btn-secondary">复制Clash订阅链接</button>
             <button onclick="copySubscription()" class="btn btn-secondary">复制V2rayN订阅链接</button>
         </div>
         
         <div class="footer">
             <div class="footer-links">
-                <a href="https://github.com/eooce/CF-Workers-VLESS" target="_blank" class="footer-link">
+                <a href="https://github.com" target="_blank" class="footer-link">
                     <svg class="github-icon" viewBox="0 0 24 24">
                         <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.479-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
                     </svg>
                     <span>GitHub 项目地址</span>
                 </a>
-                <a href="https://check-proxyip.ssss.nyc.mn/" target="_blank" class="footer-link">
-                    <span>✅</span>
-                    <span>Proxyip 检测服务</span>
-                </a>
                 <a href="https://t.me/eooceu" target="_blank" class="footer-link">
                     <span>📱</span>
-                    <span>Telegram 反馈交流群</span>
                 </a>
             </div>
         </div>
