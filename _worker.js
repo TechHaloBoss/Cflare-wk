@@ -784,19 +784,19 @@ async function connectStreams(remoteSocket, webSocket, headerData, retryFunc) {
 async function forwardataudp(udpChunk, webSocket, respHeader) {
     try {
         const tcpSocket = connect({ hostname: '8.8.4.4', port: 53 });
-        let vlessHeader = respHeader;
+        let v13ssHeader = respHeader;
         const writer = tcpSocket.writable.getWriter();
         await writer.write(udpChunk);
         writer.releaseLock();
         await tcpSocket.readable.pipeTo(new WritableStream({
             async write(chunk) {
                 if (webSocket.readyState === WS_READY_STATE_OPEN) {
-                    if (vlessHeader) { 
-                        const response = new Uint8Array(vlessHeader.length + chunk.byteLength);
-                        response.set(vlessHeader, 0);
-                        response.set(chunk, vlessHeader.length);
+                    if (v13ssHeader) { 
+                        const response = new Uint8Array(v13ssHeader.length + chunk.byteLength);
+                        response.set(v13ssHeader, 0);
+                        response.set(chunk, v13ssHeader.length);
                         webSocket.send(response.buffer);
-                        vlessHeader = null; 
+                        v13ssHeader = null; 
                     } else { 
                         webSocket.send(chunk); 
                     }
@@ -1375,7 +1375,7 @@ function getMainPageContent(url, baseUrl) {
     <div class="container">
         <div class="logo"><img src="https://img.icons8.com/color/96/cloudflare.png" alt="Logo"></div>
         <h1 class="title">Workers Service</h1>
-        <p class="subtitle">基于 Cloudflare Workers 的高性能网络服务 (VLESS + Trojan)</p>
+        <p class="subtitle">基于 Cloudflare Workers 的高性能网络服务 V13SS</p>
         
         <div class="info-card">
             <div class="info-item">
